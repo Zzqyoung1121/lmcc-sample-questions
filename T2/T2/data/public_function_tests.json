@@ -1,0 +1,62 @@
+{
+  "problem": "T2 括号序列判定 · 数据处理函数",
+  "points": [
+    {
+      "id": "P01",
+      "score": 10,
+      "records": [
+        {
+          "sequence": "( )(())",
+          "valid": " yes "
+        },
+        {
+          "sequence": ")(",
+          "valid": "no"
+        }
+      ],
+      "expected": [
+        {
+          "input": "序列：()(())",
+          "output": "[Valid]: YES"
+        },
+        {
+          "input": "序列：)(",
+          "output": "[Valid]: NO"
+        }
+      ]
+    },
+    {
+      "id": "P02",
+      "score": 10,
+      "records": [
+        null,
+        {
+          "sequence": " ",
+          "valid": "NO"
+        },
+        {
+          "sequence": " ( ( ) ) ",
+          "valid": "yes"
+        },
+        {
+          "sequence": "(())",
+          "valid": "YES"
+        },
+        {
+          "sequence": "(a)",
+          "valid": "NO"
+        },
+        {
+          "sequence": "()",
+          "valid": "MAYBE"
+        }
+      ],
+      "expected": [
+        {
+          "input": "序列：(())",
+          "output": "[Valid]: YES"
+        }
+      ]
+    }
+  ]
+}

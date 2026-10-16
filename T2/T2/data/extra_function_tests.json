@@ -1,0 +1,156 @@
+{
+  "note": "以下为按题面规则自行补充的边界用例，用于本地自测，不是官方公开测试点。",
+  "points": [
+    {
+      "id": "E01",
+      "score": 0,
+      "desc": "records 不是列表 → ValueError",
+      "records": {
+        "not": "a list"
+      },
+      "expect_error": "ValueError"
+    },
+    {
+      "id": "E02",
+      "score": 0,
+      "desc": "字段类型不符 / 缺字段 / 非字典 → 跳过",
+      "records": [
+        "()",
+        42,
+        [],
+        {
+          "sequence": "()"
+        },
+        {
+          "valid": "YES"
+        },
+        {
+          "sequence": 123,
+          "valid": "YES"
+        },
+        {
+          "sequence": "()",
+          "valid": true
+        },
+        {
+          "sequence": "()",
+          "valid": "YES",
+          "extra": "忽略"
+        }
+      ],
+      "expected": [
+        {
+          "input": "序列：()",
+          "output": "[Valid]: YES"
+        }
+      ]
+    },
+    {
+      "id": "E03",
+      "score": 0,
+      "desc": "长度边界：1 与 13 个括号被跳过，2 与 12 保留",
+      "records": [
+        {
+          "sequence": "(",
+          "valid": "NO"
+        },
+        {
+          "sequence": "()()()()()()()",
+          "valid": "NO"
+        },
+        {
+          "sequence": "()",
+          "valid": "YES"
+        },
+        {
+          "sequence": "()()()()()()",
+          "valid": "YES"
+        }
+      ],
+      "expected": [
+        {
+          "input": "序列：()",
+          "output": "[Valid]: YES"
+        },
+        {
+          "input": "序列：()()()()()()",
+          "output": "[Valid]: YES"
+        }
+      ]
+    },
+    {
+      "id": "E04",
+      "score": 0,
+      "desc": "稳定去重：同一 input 同一 output 只留首次",
+      "records": [
+        {
+          "sequence": "(())",
+          "valid": "yes"
+        },
+        {
+          "sequence": " ( ( ) ) ",
+          "valid": "YES"
+        },
+        {
+          "sequence": "(())",
+          "valid": "YES"
+        }
+      ],
+      "expected": [
+        {
+          "input": "序列：(())",
+          "output": "[Valid]: YES"
+        }
+      ]
+    },
+    {
+      "id": "E05",
+      "score": 0,
+      "desc": "同一 input 不同 output → ValueError",
+      "records": [
+        {
+          "sequence": "(())",
+          "valid": "YES"
+        },
+        {
+          "sequence": " (()) ",
+          "valid": "NO"
+        }
+      ],
+      "expect_error": "ValueError"
+    },
+    {
+      "id": "E06",
+      "score": 0,
+      "desc": "全空白/全角空格被删除；不判断合法性（()( 也照抄标签）",
+      "records": [
+        {
+          "sequence": "   ",
+          "valid": "NO"
+        },
+        {
+          "sequence": "（）",
+          "valid": "NO"
+        },
+        {
+          "sequence": "()(",
+          "valid": "NO"
+        },
+        {
+          "sequence": "\t(\n)\t",
+          "valid": "yes"
+        }
+      ],
+      "expected": [
+        {
+          "input": "序列：()(",
+          "output": "[Valid]: NO"
+        },
+        {
+          "input": "序列：()",
+          "output": "[Valid]: YES"
+        }
+      ]
+    }
+  ]
+}

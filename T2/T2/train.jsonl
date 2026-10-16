@@ -1,0 +1,3 @@
+{"sequence":"() ()","valid":" yes "}
+{"sequence":"((()))","valid":"YES"}
+{"sequence":")(","valid":"no"}

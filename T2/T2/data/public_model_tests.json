@@ -1,0 +1,32 @@
+{
+  "problem": "T2 括号序列判定 · 训练后模型评测",
+  "system_prompt": "判断序列是否合法：从左到右任意前缀左括号数不能少于右括号，最终两者数目相等。合法只输出[Valid]: YES，否则只输出[Valid]: NO，冒号后一个半角空格，不加解释。",
+  "max_new_tokens": 128,
+  "thinking": false,
+  "points": [
+    {
+      "id": "M01",
+      "score": 10,
+      "input": "序列：(()(()()))",
+      "answer": "[Valid]: YES"
+    },
+    {
+      "id": "M02",
+      "score": 10,
+      "input": "序列：((())())()",
+      "answer": "[Valid]: YES"
+    },
+    {
+      "id": "M03",
+      "score": 10,
+      "input": "序列：())(()())(",
+      "answer": "[Valid]: NO"
+    },
+    {
+      "id": "M04",
+      "score": 10,
+      "input": "序列：((()())())(",
+      "answer": "[Valid]: NO"
+    }
+  ]
+}
