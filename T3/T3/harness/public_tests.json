@@ -1,0 +1,3490 @@
+{
+  "problem": "T3 TodoMVC 作业安排 · 公开测试点",
+  "source": "LMCC-机考三题例题文档.pdf 第 13–22 页（P01–P05）",
+  "note": "每点 10 分，两个子场景全通过才得分。可见行序号从 0 开始。",
+  "points": [
+    {
+      "id": "P01",
+      "title": "独立科目与联合筛选下完成",
+      "scenarios": [
+        {
+          "id": "P01-1",
+          "title": "添加同名作业保留独立科目并筛选单删",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "  数学练习  "
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学练习",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学练习",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "背单词"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学练习",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "背单词",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "数学练习"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学练习",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "背单词",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学练习",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学练习",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "背单词",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学练习",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "   "
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学练习",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "背单词",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学练习",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "unassigned"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "背单词",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学练习",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "destroy",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows_empty",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学练习",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "背单词",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": "P01-2",
+          "title": "科目完成交集下勾选与全清单计数",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "预习语文"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "数学订正"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学订正",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "英语阅读"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学订正",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语阅读",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学订正",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语阅读",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 1,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学订正",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "英语阅读",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学订正",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "英语阅读",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学订正",
+                    "done": true,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "英语阅读",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "英语阅读",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 2
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "completed"
+              }
+            },
+            {
+              "op": "assert_rows_empty",
+              "args": {}
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 2
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "active"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "英语阅读",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "英语阅读",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 1
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "completed"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": true,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 1
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学订正",
+                    "done": true,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学订正",
+                    "done": true,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "英语阅读",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "预习语文",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学订正",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "英语阅读",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "删除清理保存与逐条选科目",
+      "scenarios": [
+        {
+          "id": "P02-1",
+          "title": "删除清理后保留科目和移动顺序并刷新",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "语文朗读"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "数学草稿"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "英语默写"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "整理书包"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文朗读",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学草稿",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语默写",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "整理书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文朗读",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学草稿",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语默写",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "整理书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文朗读",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学草稿",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语默写",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "整理书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 3
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文朗读",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学草稿",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "整理书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语默写",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文朗读",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学草稿",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "整理书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语默写",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文朗读",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "active"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文朗读",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "destroy",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows_empty",
+              "args": {}
+            },
+            {
+              "op": "clear_completed",
+              "args": {}
+            },
+            {
+              "op": "assert_rows_empty",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "整理书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语默写",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "整理书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语默写",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "reload",
+              "args": {}
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "整理书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语默写",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": "P02-2",
+          "title": "逐条科目独立",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "朗读"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "朗读"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "写字"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "朗读",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "朗读",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "写字",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 1,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "朗读",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "朗读",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "写字",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "朗读",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "朗读",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "写字",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "朗读",
+                    "done": true,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "朗读",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "写字",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 1,
+                "subject": "unassigned"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "朗读",
+                    "done": true,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "朗读",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "写字",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "订正错题"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "朗读",
+                    "done": true,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "朗读",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "写字",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "订正错题",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 3
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "联合筛选与全清单移动边界",
+      "scenarios": [
+        {
+          "id": "P03-1",
+          "title": "科目和完成交集",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "算术"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "单词"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "几何"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "画画"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "算术",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "单词",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "几何",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "画画",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "算术",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "单词",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "几何",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "画画",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 1,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "算术",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "单词",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "几何",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "画画",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "算术",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "单词",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "几何",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "画画",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 2
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "算术",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "单词",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "几何",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "画画",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "算术",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "几何",
+                    "done": true,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "active"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "算术",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 3
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows_empty",
+              "args": {}
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "completed"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "几何",
+                    "done": true,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "unassigned"
+              }
+            },
+            {
+              "op": "assert_rows_empty",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "english"
+              }
+            },
+            {
+              "op": "assert_rows_empty",
+              "args": {}
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "算术",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "单词",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "算术",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "单词",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "几何",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "画画",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "P03-2",
+          "title": "全清单移动与边界",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "第一项"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "第二项"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "第三项"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "第一项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "第二项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "第三项",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "第二项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "第一项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "第三项",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "move_down",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "第一项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "第二项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "第三项",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 2
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "第一项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "第三项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "第二项",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "move_down",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "第一项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "第二项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "第三项",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "destroy",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "第一项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "第三项",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "destroy",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "第三项",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "可见移动、隐藏位置与完成变化",
+      "scenarios": [
+        {
+          "id": "P04-1",
+          "title": "科目移动保持隐藏位置",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "计算A"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "英语B"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "计算C"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "未分D"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "计算E"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计算A",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语B",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计算C",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "未分D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计算E",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计算A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "英语B",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计算C",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "未分D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计算E",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 1,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计算A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "英语B",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "计算C",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "未分D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计算E",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计算A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "英语B",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "计算C",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "未分D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计算E",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 4,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计算A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "英语B",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "计算C",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "未分D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计算E",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计算A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计算C",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计算E",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 2
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计算A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计算E",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计算C",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计算E",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计算A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计算C",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "move_down",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计算E",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计算C",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计算A",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计算E",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "英语B",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "计算C",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "未分D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计算A",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "unassigned"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "未分D",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "id": "P04-2",
+          "title": "交集移动与完成变化",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "练习一"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "收拾书桌"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "练习二"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "装书包"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "练习三"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "收拾书桌",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习二",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "装书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习三",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "收拾书桌",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习二",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "装书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习三",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "收拾书桌",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习二",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "装书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习三",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 4,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "收拾书桌",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习二",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "装书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习三",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 2
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "收拾书桌",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习二",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "装书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习三",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "练习二",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "练习三",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "active"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "练习三",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习三",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习三",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "练习二",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 2
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习三",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "练习二",
+                    "done": true,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "练习三",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "收拾书桌",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "装书包",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "练习二",
+                    "done": true,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 3
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P05",
+      "title": "刷新追加与移动后修改一致",
+      "scenarios": [
+        {
+          "id": "P05-1",
+          "title": "刷新恢复和追加",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "代数"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "听写"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "课文"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "听写",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "听写",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "听写",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "听写",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 2
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "听写",
+                    "done": true,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "move_down",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "听写",
+                    "done": true,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "听写",
+                    "done": true,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "听写",
+                    "done": true,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "reload",
+              "args": {}
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "听写",
+                    "done": true,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "新作业"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "听写",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "新作业",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 3
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "听写",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "新作业",
+                    "done": true,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "听写"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "课文",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "代数",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "听写",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "新作业",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "听写",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "P05-2",
+          "title": "移动改科目删除清理刷新",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "计划A"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "计划B"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "计划C"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "计划D"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "计划E"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划B",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划C",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划E",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划B",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划C",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划E",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划B",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划C",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划E",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 4,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划B",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划C",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划E",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划C",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划C",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划C",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "计划B",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划E",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "destroy",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划C",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划E",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划C",
+                    "done": true,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划E",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "clear_completed",
+              "args": {}
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划E",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划E",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "reload",
+              "args": {}
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "计划A",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "计划D",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "计划E",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 3
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

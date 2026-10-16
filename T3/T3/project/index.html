@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-framework="javascript-es5">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="LMCC 第二轮例题：作业安排" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>作业安排</title>
+        <link rel="stylesheet" href="assets/base.css" />
+        <link rel="stylesheet" href="assets/index.css" />
+    </head>
+    <body>
+        <section class="todoapp">
+            <header class="header">
+                <h1>作业</h1>
+                <input class="new-todo" placeholder="需要做什么？" autofocus />
+            </header>
+            <main class="main">
+                <div class="toggle-all-container">
+                    <input class="toggle-all" type="checkbox" />
+                    <label class="toggle-all-label" for="toggle-all">全部标记为已完成</label>
+                </div>
+                <ul class="todo-list"></ul>
+            </main>
+            <footer class="footer">
+                <span class="todo-count"></span>
+                <label class="subject-filter-label" for="subject-filter">科目</label>
+                <select id="subject-filter">
+                    <option value="all">全部科目</option>
+                    <option value="unassigned">未分类</option>
+                    <option value="chinese">语文</option>
+                    <option value="math">数学</option>
+                    <option value="english">英语</option>
+                </select>
+                <ul class="filters">
+                    <li>
+                        <a href="#/" class="selected">全部</a>
+                    </li>
+                    <li>
+                        <a href="#/active">未完成</a>
+                    </li>
+                    <li>
+                        <a href="#/completed">已完成</a>
+                    </li>
+                </ul>
+                <button class="clear-completed">清理已完成</button>
+            </footer>
+        </section>
+        <footer class="info">
+            <p>双击可编辑作业</p>
+            <p>基于 TodoMVC 的 JavaScript ES5 示例（MIT License）</p>
+            <p>原作者：<a href="http://twitter.com/oscargodson">Oscar Godson</a>、<a href="https://github.com/cburgmer">Christoph Burgmer</a>、Addy Osmani、Sindre Sorhus、Pascal Hartig、Stephen Sawchuk</p>
+            <p>来源：<a href="https://github.com/tastejs/todomvc">tastejs/todomvc</a> @ ff43b02e59dfa604386bb382034b2cd07c2bcd8a</p>
+        </footer>
+		<script src="assets/base.js"></script>
+        <script src="src/helpers.js"></script>
+        <script src="src/store.js"></script>
+        <script src="src/model.js"></script>
+        <script src="src/template.js"></script>
+        <script src="src/view.js"></script>
+        <script src="src/controller.js"></script>
+        <script src="src/app.js"></script>
+    </body>
+</html>

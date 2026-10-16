@@ -1,0 +1,1983 @@
+{
+  "problem": "T3 TodoMVC 作业安排 · 隐藏测试点（自造，非官方）",
+  "note": "只覆盖题面已写明、而公开点未覆盖的行为。每点 10 分，两个子场景全通过才得分。",
+  "points": [
+    {
+      "id": "H01",
+      "title": "清理已完成删除筛选外条目",
+      "scenarios": [
+        {
+          "id": "H01-1",
+          "title": "只看数学时清理，删除隐藏的已完成条目",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "数学甲"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "语文乙"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "数学丙"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学甲",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "语文乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学丙",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学甲",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "语文乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学丙",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学甲",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "语文乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学丙",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学甲",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "语文乙",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学丙",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 2
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学甲",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "语文乙",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学丙",
+                    "done": true,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 1
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学甲",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "数学丙",
+                    "done": true,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "clear_completed",
+              "args": {}
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学甲",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学甲",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "H01-2",
+          "title": "只看未完成时清理，删掉筛选外的已完成",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "甲"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "乙"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "丙"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "丁"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "丙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "丁",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 2
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "丙",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "丁",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 2
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "active"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "丁",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "clear_completed",
+              "args": {}
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "丁",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "丁",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "H02",
+      "title": "筛选状态下新增作业仍为未分类",
+      "scenarios": [
+        {
+          "id": "H02-1",
+          "title": "只看数学时新增，不自动归为数学且追加末尾",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "数学一"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "英语一"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学一",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语一",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 1,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "英语一",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学一",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "新作业"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学一",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "数学一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "英语一",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "新作业",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "H02-2",
+          "title": "只看英语时新增，科目仍为未分类",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "英语二"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "数学二"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "英语二",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学二",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 1,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "英语二",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "数学二",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "英语二",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "追加项"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "英语二",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "英语二",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "数学二",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "追加项",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "unassigned"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "英语二",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "数学二",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "追加项",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 3
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "H03",
+      "title": "切换筛选不改变全清单顺序",
+      "scenarios": [
+        {
+          "id": "H03-1",
+          "title": "反复切换科目与完成筛选后顺序不变",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "一"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "二"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "三"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "四"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "一",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "二",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "三",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "四",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "二",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "三",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "四",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 2
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "二",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "三",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "四",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "active"
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "unassigned"
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "二",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "三",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "四",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "completed"
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "一",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "二",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "三",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "四",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "H03-2",
+          "title": "移动后再切换筛选，全清单顺序保持",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "A项"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "B项"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "C项"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "A项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "B项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "C项",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "A项",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "B项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "C项",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "A项",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "C项",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "C项",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "A项",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "C项",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "B项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "A项",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "active"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "C项",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "A项",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_status_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "C项",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "B项",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "A项",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "H04",
+      "title": "单条与空列表下的移动边界",
+      "scenarios": [
+        {
+          "id": "H04-1",
+          "title": "只有一条时两个移动按钮都禁用",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "唯一"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "唯一",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "唯一",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            }
+          ]
+        },
+        {
+          "id": "H04-2",
+          "title": "筛选后只剩一条，边界随之收敛",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "甲"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "乙"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "丙"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "丙",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 1,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "丙",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "丙",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "destroy",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "丙",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "destroy",
+              "args": {
+                "index": 1
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "math"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "H05",
+      "title": "刷新保持科目与顺序且筛选继续可用",
+      "scenarios": [
+        {
+          "id": "H05-1",
+          "title": "刷新后全清单顺序与科目完整恢复",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "语文甲"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "数学乙"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "英语丙"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "物理丁"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文甲",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "数学乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语丙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "物理丁",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "chinese"
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 1,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文甲",
+                    "done": false,
+                    "subject": "chinese"
+                  },
+                  {
+                    "title": "数学乙",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "英语丙",
+                    "done": false,
+                    "subject": "english"
+                  },
+                  {
+                    "title": "物理丁",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 3
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文甲",
+                    "done": false,
+                    "subject": "chinese"
+                  },
+                  {
+                    "title": "数学乙",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "物理丁",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语丙",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "move_up",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文甲",
+                    "done": false,
+                    "subject": "chinese"
+                  },
+                  {
+                    "title": "数学乙",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "物理丁",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语丙",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 2
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文甲",
+                    "done": false,
+                    "subject": "chinese"
+                  },
+                  {
+                    "title": "数学乙",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "物理丁",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语丙",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "reload",
+              "args": {}
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文甲",
+                    "done": false,
+                    "subject": "chinese"
+                  },
+                  {
+                    "title": "数学乙",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "物理丁",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语丙",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 3
+              }
+            },
+            {
+              "op": "assert_move_buttons_boundary",
+              "args": {}
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "chinese"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文甲",
+                    "done": false,
+                    "subject": "chinese"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject_filter",
+              "args": {
+                "value": "all"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "语文甲",
+                    "done": false,
+                    "subject": "chinese"
+                  },
+                  {
+                    "title": "数学乙",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "物理丁",
+                    "done": true,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "英语丙",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "H05-2",
+          "title": "刷新后新条目仍追加末尾且不混淆",
+          "steps": [
+            {
+              "op": "add",
+              "args": {
+                "text": "甲"
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "乙"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 0,
+                "subject": "math"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "reload",
+              "args": {}
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "add",
+              "args": {
+                "text": "甲"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "unassigned"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "set_subject",
+              "args": {
+                "index": 2,
+                "subject": "english"
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "reload",
+              "args": {}
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 3
+              }
+            },
+            {
+              "op": "toggle",
+              "args": {
+                "index": 0
+              }
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "reload",
+              "args": {}
+            },
+            {
+              "op": "assert_rows",
+              "args": {
+                "rows": [
+                  {
+                    "title": "甲",
+                    "done": true,
+                    "subject": "math"
+                  },
+                  {
+                    "title": "乙",
+                    "done": false,
+                    "subject": "unassigned"
+                  },
+                  {
+                    "title": "甲",
+                    "done": false,
+                    "subject": "english"
+                  }
+                ]
+              }
+            },
+            {
+              "op": "assert_active_count",
+              "args": {
+                "n": 2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
